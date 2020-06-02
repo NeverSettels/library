@@ -42,5 +42,30 @@ namespace Library.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    public ActionResult Details(int id)
+    {
+      var thisBook = _db.Books
+      .Include(book => book.Authors)
+      .ThenInclude(join => join.Author)
+      .FirstOrDefault(book => book.BookId == id);
+      return View(thisBook);
+    }
+
+    public ActionResult CreateCopy(int id)
+    {
+      var thisBook = _db.Books.FirstOrDefault(b => b.BookId == id);
+      return View(thisBook);
+    }
+
+    [HttpPost]
+    public ActionResult CreateCopy(Copy copy, int BookId)
+    {
+      _db.Copies.Add(copy);
+      _db.SaveChanges();
+      var newCopy = _db.Copies.FirstOrDefault(c => c.BookId == copy.BookId);
+      _db.BookCopies.Add(newCopy);
+
+    }
   }
 }

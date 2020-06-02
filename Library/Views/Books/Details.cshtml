@@ -1,0 +1,19 @@
+@{
+  Layout = "_Layout";
+}
+
+@using Library.Models;
+@model Library.Models.Book
+
+<h2>@Model.Title</h2>
+<p>@Model.Description</p>
+
+<p>by:</p>
+@foreach (var join in Model.Authors)
+{
+    <p> @Html.ActionLink($"{join.Author.Name}", "Details", "Authors", new{ id = join.Author.AuthorId}) </p>
+}
+
+@Html.ActionLink("Return to Books list", "Index")
+@Html.ActionLink("Add a new book", "Create")
+@Html.ActionLink("Add a copy of this book", "CreateCopy", new {id = Model.BookId})
