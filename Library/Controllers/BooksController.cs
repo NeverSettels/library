@@ -63,15 +63,16 @@ namespace Library.Controllers
     }
 
     [HttpPost]
-    public ActionResult CreateCopy(Copy copy)
+    public ActionResult CreateCopy(Copy copy, int id)
     {
-
-      _db.Copies.Add(copy);
+      Copy dumbCopy = copy;
+      dumbCopy.BookId = id;
+      _db.Copies.Add(dumbCopy);
       _db.SaveChanges();
-      var newCopy = _db.Copies.FirstOrDefault(c => c.BookId == copy.BookId);
-      _db.BookCopies.Add(new BookCopy() { BookId = Id, CopyId = newCopy.CopyId });
+      var newCopy = _db.Copies.FirstOrDefault(c => c.BookId == dumbCopy.BookId);
+      _db.BookCopies.Add(new BookCopy() { BookId = id, CopyId = newCopy.CopyId });
       _db.SaveChanges();
-      return RedirectToAction("Details", new { id = Id });
+      return RedirectToAction("Details", new { id });
 
     }
   }
