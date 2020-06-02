@@ -8,7 +8,7 @@ namespace Library.Models
   {
     public int CopyId { get; set; }
     public int PublicationYear { get; set; }
-    public string Edition { get; set; }
+    public string Condition { get; set; }
     public int BookId { get; set; }
   }
 
