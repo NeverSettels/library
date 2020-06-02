@@ -54,17 +54,24 @@ namespace Library.Controllers
 
     public ActionResult CreateCopy(int id)
     {
-      var thisBook = _db.Books.FirstOrDefault(b => b.BookId == id);
-      return View(thisBook);
+      var thisBook = _db.Books
+    .Include(book => book.Authors)
+    .ThenInclude(join => join.Author)
+    .FirstOrDefault(book => book.BookId == id);
+      ViewBag.Book = thisBook;
+      return View();
     }
 
     [HttpPost]
-    public ActionResult CreateCopy(Copy copy, int BookId)
+    public ActionResult CreateCopy(Copy copy)
     {
+
       _db.Copies.Add(copy);
       _db.SaveChanges();
       var newCopy = _db.Copies.FirstOrDefault(c => c.BookId == copy.BookId);
-      _db.BookCopies.Add(newCopy);
+      _db.BookCopies.Add(new BookCopy() { BookId = Id, CopyId = newCopy.CopyId });
+      _db.SaveChanges();
+      return RedirectToAction("Details", new { id = Id });
 
     }
   }

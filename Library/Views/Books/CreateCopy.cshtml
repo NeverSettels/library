@@ -1,0 +1,25 @@
+@{
+  Layout = "_Layout";
+}
+@using Library.Models;
+@model Library.Models.Copy;
+
+<h2>Create a copy of: @ViewBag.Book.Title by
+@foreach (var join in ViewBag.Book.Authors)
+{
+  <span>@join.Author.Name </span>
+}
+
+ </h2>
+
+ @using (Html.BeginForm())
+ {
+   @* @Html.HiddenFor(model => model.BookId); *@
+   @Html.LabelFor(model => model.PublicationYear);
+   @Html.TextBoxFor(model=>model.PublicationYear, new { @type = "number" })
+   <br>
+   @Html.LabelFor(model => model.Condition) 
+   @Html.TextBoxFor(model => model.Condition)
+   <br>
+   <input type="submit" value="Add copy">
+ }
