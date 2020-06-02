@@ -1,0 +1,21 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Author;
+
+<h1>Add a new author</h1>
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(model=> model.Name)
+  @Html.TextBoxFor(model =>model.Name)
+  <br>
+  <input type="submit" value="Add author">
+}
+
+@Html.ActionLink("Author Index", "Index")
+<br>
+@Html.ActionLink("Return to Home", "Index", "Home")
+<br>
+@Html.ActionLink("View all books", "Index", "Books")

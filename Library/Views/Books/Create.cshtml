@@ -1,0 +1,28 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Book; 
+
+@if (ViewBag.Authors.Count == 0)
+{
+  <h2>You have no authorinos! All books must include an author.</h2>
+}
+else
+{
+<h2>Add a book brah</h2>
+
+@using(Html.BeginForm())
+{
+  @Html.LabelFor(model=> model.Title);
+  @Html.TextBoxFor(model =>model.Title);
+  <br>
+   @Html.LabelFor(model=> model.Description)
+  @Html.TextBoxFor(model =>model.Description)
+  <br>
+  @Html.Label("Select the author")
+  @Html.DropDownList("AuthorId")
+  <br>
+  <input type="submit" value="Add it!">
+}
+}
